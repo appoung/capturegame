@@ -1,21 +1,17 @@
 from flask import Flask,render_template,redirect, request, url_for, jsonify,make_response
 import json
 app = Flask(__name__)
-@app.before_first_request
-def chooseRole():
-    import choose
-    from choose import member,password_list
-    global member
-    global password_list
-    global spy
-    spy = choose.chooseRole()
-@app.before_first_request
-def chooseTeam():
-    global teams
-    import choose
-    teams = choose.chooseTeam(spy)
-    teams = json.dumps(teams,ensure_ascii=False)
-    teams = make_response(teams)
+import choose
+from choose import member,password_list
+global member
+global password_list
+global spy
+spy = choose.chooseRole()
+global teams
+import choose
+teams = choose.chooseTeam(spy)
+teams = json.dumps(teams,ensure_ascii=False)
+teams = make_response(teams)
 @app.route("/")
 def home():
     return render_template('index.html')
